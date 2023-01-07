@@ -30,42 +30,42 @@ public class ExampleControllerTests {
     }
 
     @Test
-    void shouldGetOK() {
+    void shouldSquareNumber() {
         this.client
                 .get()
-                .uri("/ok")
-                .accept(MediaType.TEXT_PLAIN)
+                .uri("/compute/square/3.0")
+                .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader()
-                .contentTypeCompatibleWith(MediaType.TEXT_PLAIN)
+                .contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
                 .expectBody()
                 .consumeWith(res -> {
                     Assertions
                             .assertThat(new String(res.getResponseBodyContent()))
                             .isNotNull()
-                            .isEqualTo("OK");
-                    document("ok").accept(res);
+                            .isEqualTo("9.0");
+                    document("square").accept(res);
                 });
     }
 
     @Test
-    void shouldGetHello() {
+    void shouldRootOfNumber() {
         this.client
                 .get()
-                .uri("/hello/test")
-                .accept(MediaType.TEXT_PLAIN)
+                .uri("/compute/root/9.0")
+                .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader()
-                .contentTypeCompatibleWith(MediaType.TEXT_PLAIN)
+                .contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
                 .expectBody()
                 .consumeWith(res -> {
                     Assertions
                             .assertThat(new String(res.getResponseBodyContent()))
                             .isNotNull()
-                            .isEqualTo("Hello test");
-                    document("hello").accept(res);
+                            .isEqualTo("3.0");
+                    document("3").accept(res);
                 });
     }
 }
