@@ -1,0 +1,18 @@
+= Build and Test a RESTful Controller with Spring Boot
+
+This API, explained below lets us receive Strings.
+It serves as the example content for our RESTFUL demo.
+
+To Get an "OK" String:
+
+operation::ok[]
+
+That gives us the String "OK". Simple? Yes.
+
+Let's do something a bit more involved:
+
+To GET an "Hello $NAME" String:
+
+operation::hello[]
+
+This concludes this tutorial on RESTful Controller implementation.
