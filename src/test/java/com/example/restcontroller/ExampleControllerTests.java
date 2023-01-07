@@ -11,6 +11,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Mono;
 
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
@@ -65,7 +66,28 @@ public class ExampleControllerTests {
                             .assertThat(new String(res.getResponseBodyContent()))
                             .isNotNull()
                             .isEqualTo("3.0");
-                    document("3").accept(res);
+                    document("root").accept(res);
+                });
+    }
+
+    @Test
+    void shouldSumNumbers() {
+        this.client
+                .post()
+                .uri("/compute/sum")
+                .bodyValue(new Double[]{1.0,2.0,3.0})
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader()
+                .contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .consumeWith(res -> {
+                    Assertions
+                            .assertThat(new String(res.getResponseBodyContent()))
+                            .isNotNull()
+                            .isEqualTo("6.0");
+                    document("sum").accept(res);
                 });
     }
 }

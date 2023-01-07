@@ -1,18 +1,22 @@
 = Build and Test a RESTful Controller with Spring Boot
 
-This API, explained below lets us receive Strings.
+This API, explained below lets us compute squares and roots of doubles.
 It serves as the example content for our RESTFUL demo.
 
-To Get an "OK" String:
+To square (n^2) a number:
 
-operation::ok[]
+include::{snippets}/square/http-request.adoc[]
 
-That gives us the String "OK". Simple? Yes.
+That gives us the number that is the square of it's input. Simple? Yes.
 
-Let's do something a bit more involved:
+include::{snippets}/square/http-response.adoc[]
 
-To GET an "Hello $NAME" String:
+To GET a the ROOT (Math.sqrt(n)) of a number:
 
-operation::hello[]
+include::{snippets}/root/http-request.adoc[]
 
-This concludes this tutorial on RESTful Controller implementation.
+This gives us the number that is the root of it's input. Presto!
+
+include::{snippets}/root/http-response.adoc[]
+
+This concludes this tutorial on Documenting RESTful Controller implementation.

@@ -1,10 +1,7 @@
 package com.example.restcontroller;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/compute")
@@ -19,4 +16,18 @@ public class ExampleController {
     public Double square(@PathVariable Double number) {
         return number * number;
     }
+
+    @PostMapping(value = "/sum", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Double sumOf(@RequestBody Double[] numbers) {
+        return sum(numbers);
+    }
+
+    public double sum(Double[] array) {
+        double sum = 0;
+        for (Double d : array) {
+            sum += d;
+        }
+        return sum;
+    }
+
 }
