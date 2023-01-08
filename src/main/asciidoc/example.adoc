@@ -19,4 +19,13 @@ This gives us the number that is the root of it's input. Presto!
 
 include::{snippets}/root/http-response.adoc[]
 
+Hrmm... lets say we want to sum an array of doubles. There is
+the "/sum" endpoint we can feed an JSON array to.
+
+include::{snippets}/sum/http-request.adoc[]
+
+Now, the output is the sum of all doubles in the array:
+
+include::{snippets}/sum/http-response.adoc[]
+
 This concludes this tutorial on Documenting RESTful Controller implementation.
