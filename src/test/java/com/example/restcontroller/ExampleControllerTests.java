@@ -11,7 +11,6 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import reactor.core.publisher.Mono;
 
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
@@ -27,7 +26,6 @@ public class ExampleControllerTests {
         this.client = WebTestClient.bindToApplicationContext(ctx).configureClient()
                 .filter(documentationConfiguration(restDocumentation))
                 .build();
-
     }
 
     @Test
@@ -75,7 +73,7 @@ public class ExampleControllerTests {
         this.client
                 .post()
                 .uri("/compute/sum")
-                .bodyValue(new Double[]{1.0,2.0,3.0})
+                .bodyValue(new Double[]{1.0, 2.0, 3.0})
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
