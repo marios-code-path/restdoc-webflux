@@ -1,21 +1,18 @@
 package com.example.restcontroller;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.context.ApplicationContext;
+import org.springframework.cloud.contract.wiremock.restdocs.SpringCloudContractRestDocs;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
-import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
 @WebFluxTest(ExampleController.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
@@ -48,7 +45,8 @@ public class ExampleControllerTests {
                             .assertThat(new String(res.getResponseBodyContent()))
                             .isNotNull()
                             .isEqualTo("9.0");
-                    document("square").accept(res);
+                    document("square",
+                            SpringCloudContractRestDocs.dslContract()).accept(res);
                 });
     }
 
@@ -68,7 +66,8 @@ public class ExampleControllerTests {
                             .assertThat(new String(res.getResponseBodyContent()))
                             .isNotNull()
                             .isEqualTo("3.0");
-                    document("root").accept(res);
+                    document("root",
+                            SpringCloudContractRestDocs.dslContract()).accept(res);
                 });
     }
 
@@ -89,7 +88,8 @@ public class ExampleControllerTests {
                             .assertThat(new String(res.getResponseBodyContent()))
                             .isNotNull()
                             .isEqualTo("6.0");
-                    document("sum").accept(res);
+                    document("sum",
+                            SpringCloudContractRestDocs.dslContract()).accept(res);
                 });
     }
 }
