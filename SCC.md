@@ -1,0 +1,1 @@
+[Add Stubs to GIT](https://docs.spring.io/spring-cloud-contract/docs/current/reference/html/howto.html#how-to-use-git-as-storage)

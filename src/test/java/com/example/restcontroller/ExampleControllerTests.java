@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
@@ -17,16 +19,18 @@ import static org.springframework.restdocs.webtestclient.WebTestClientRestDocume
 
 @WebFluxTest(ExampleController.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
+@AutoConfigureRestDocs
 public class ExampleControllerTests {
 
+    @Autowired
     private WebTestClient client;
-
-    @BeforeEach
-    void setUp(ApplicationContext ctx, RestDocumentationContextProvider restDocumentation) {
-        this.client = WebTestClient.bindToApplicationContext(ctx).configureClient()
-                .filter(documentationConfiguration(restDocumentation))
-                .build();
-    }
+//
+//    @BeforeEach
+//    void setUp(ApplicationContext ctx, RestDocumentationContextProvider restDocumentation) {
+//        this.client = WebTestClient.bindToApplicationContext(ctx).configureClient()
+//                .filter(documentationConfiguration(restDocumentation))
+//                .build();
+//    }
 
     @Test
     void shouldSquareNumber() {
