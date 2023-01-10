@@ -45,6 +45,117 @@ Create some `@RestControllers`. Testing comes next.
 
 Tests drive creation of RESTDocs, Contracts, and WireMock stubs.
 
+### Setup Assembly Plugin
+
+The Maven Assembly Plugin can be configured to read in our assembly configuration at `src/assembly/stub.xml`:
+
+The following is the plugin configuration listing found in `pom.xml`:
+
+```xml
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>stub</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+							<attach>true</attach>
+							<descriptors>
+								${basedir}/src/assembly/stub.xml
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+```
+
+Create a directory `src/assembly` and create an exmpty XML file so we can configure the Assembly plugin.
+
+The Configuration for this project looks like the following:
+
+```xml
+<assembly
+        xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 https://maven.apache.org/xsd/assembly-1.1.3.xsd">
+    <id>stubs</id>
+    <formats>
+        <format>jar</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/java</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>**com/example/restdoc/*.*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/classes</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>**com/example/restdoc/*.*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/snippets/stubs</directory>
+            <outputDirectory>META-INF/${project.groupId}/${project.artifactId}/${project.version}/mappings</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/snippets/contracts</directory>
+            <outputDirectory>META-INF/${project.groupId}/${project.artifactId}/${project.version}/contracts</outputDirectory>
+            <includes>
+                <include>**/*.groovy</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
+```
+
+### Connect the restdocs in build
+
+Configure `restdocs` generation in  pom.xml:
+
+```xml
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<version>1.5.8</version>
+				<executions>
+					<execution>
+						<id>generate-docs</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>process-asciidoc</goal>
+						</goals>
+						<configuration>
+							<attributes>
+								<snippets>${project.build.directory}/generated-snippets</snippets>
+							</attributes>
+							<backend>html</backend>
+							<doctype>book</doctype>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework.restdocs</groupId>
+						<artifactId>spring-restdocs-asciidoctor</artifactId>
+						<version>${spring-restdocs.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+```
+
 ### Build the project
 
 Build the full artifact containing WireMock stubs by exeucting:
@@ -58,3 +169,7 @@ The next step is to utilize the generated stub with a client project using [Stub
 ## Conclusion
 
 Creating artifacts for documentation, and client/service validation is easier than thought.
+
+# Conclusion and Links
+
+[Add Stubs to GIT](https://docs.spring.io/spring-cloud-contract/docs/current/reference/html/howto.html#how-to-use-git-as-storage)
