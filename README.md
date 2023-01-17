@@ -170,6 +170,6 @@ The next step is to utilize the generated stub with a client project using [Stub
 
 Creating artifacts for documentation, and client/service validation is easier than thought.
 
-# Conclusion and Links
+## Links
 
 [Add Stubs to GIT](https://docs.spring.io/spring-cloud-contract/docs/current/reference/html/howto.html#how-to-use-git-as-storage)
